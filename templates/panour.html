@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+<br>
+<h1 class="text-center">{{q.nume}} ? </h1> <h4 class="text-center"><a href="/edit?id={{q.id}}"> <strong> Edit </strong> </a> </h4>
+
+<h4 class="text-center">
+<a href="/delete?id={{q.id}}" onclick="if (!confirm('Are you sure?')) return false;"> <strong>Delete </strong></a>  <br> <br>
+</h4>
+<h1 class="text-center">temp:{{q.temperatura}}</h1>
+
+<h4 class="text-center"><a href="/">return</a></h4>
+{% endblock %}
