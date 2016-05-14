@@ -59,9 +59,15 @@ def panou(id):
 @app.route('/upload',methods = ['GET','POST'])
 def upload():
 	if request.method == 'POST':
+		ip = request.form['id']
+		db.session.add(imagini(ip))
+		db.session.commit()
+		obj = imagini.query.order_by(imagini.id.desc()).first()
 		file = request.files['file']
 		if file and allowed_file(file.filename):
-			filename = secure_filename(file.filename)
+			name = str(obj.id) + '.' + file.filename.rsplit('.', 1)[1]
+			obj.name = name
+			filename = secure_filename(name)
 			file.save(os.path.join(app.config['UPLOAD_FOLDER'],filename))
 			return redirect(url_for('uploaded_file',filename=filename))
 	return '''
@@ -70,6 +76,7 @@ def upload():
     <h1>Upload new File</h1>
     <form action="" method=post enctype=multipart/form-data>
       <p><input type=file name=file>
+      	<input type="text" name=id placeholder=id />
          <input type=submit value=Upload>
     </form>
     '''
@@ -77,6 +84,31 @@ def upload():
 def uploaded_file(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'],
                                filename)
+
+
+
+@app.route('/accidente', methods = ['GET','POST'])
+def accidente():
+	if request.method == 'GET':
+		a   = request.args.get('a')
+		ip = request.args.get('ip')
+		c = panourile.query.filter_by(id_init = ip).first()
+		c.accident = a
+		return redirect(url_for('panouri'))
+
+@app.route('/runer',methods = ['GET'])
+def runer():
+	r = request.args.get('r')
+	img = imagini.query.filter_by(id_p = r).all()
+	return render_template('slider.html',img=img)
+
+
+
+@app.route('/delete',methods = ['GET'])
+def delete():
+	k = request.args.get('id')
+	panourile.query.filter_by(id=k).delete()
+	return redirect(url_for('panouri'))
 if __name__ == "__main__":
 	app.run(debug=True)
  

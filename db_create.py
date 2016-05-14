@@ -7,7 +7,7 @@ db.create_all()
 
 
 db.session.add(panourile('1','0.0.0.1'))
-db.session.add(imagini('0.0.0.1'))
+
 db.session.add(panourile('2','0.0.0.2'))
 
 #commit

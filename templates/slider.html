@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+ <header id="myCarousel" class="carousel slide">
+<div class="carousel-inner">
+{%set p='active'%}
+{%for i in img%}
+ 
+            <div class="item {{p}}">
+                <!-- Set the third background image using inline CSS below. -->
+                <div class="fill" style="background-image:url('http://localhost:5000/uploads/{{i.name}}');"></div>
+                
+            </div>
+            {%set p=''%}
+{%endfor%}
+</div>
+<a class="left carousel-control" href="#myCarousel" data-slide="prev">
+            <span class="icon-prev"></span>
+        </a>
+        <a class="right carousel-control" href="#myCarousel" data-slide="next">
+            <span class="icon-next"></span>
+        </a>
+
+    </header>
+
+ <script src="../static/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="../static/bootstrap.min.js"></script>
+
+    <!-- Script to Activate the Carousel -->
+    <script>
+    $('.carousel').carousel({
+        interval: 5000 //changes the speed
+    })
+    </script>
+{% endblock %}
