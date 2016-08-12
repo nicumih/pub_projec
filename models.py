@@ -22,4 +22,3 @@ class imagini(db.Model):
 	name = db.Column(db.String)
 	def __init__(self,id_p):
 		self.id_p = id_p
- 

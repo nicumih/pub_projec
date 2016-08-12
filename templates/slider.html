@@ -4,11 +4,11 @@
 <div class="carousel-inner">
 {%set p='active'%}
 {%for i in img%}
- 
+
             <div class="item {{p}}">
                 <!-- Set the third background image using inline CSS below. -->
-                <div class="fill" style="background-image:url('http://localhost:5000/uploads/{{i.name}}');"></div>
-                
+                <div class="fill" style="background-image:url('http://nick1212.pythonanywhere.com/uploads/{{i.name}}');"></div>
+
             </div>
             {%set p=''%}
 {%endfor%}
@@ -30,7 +30,8 @@
     <!-- Script to Activate the Carousel -->
     <script>
     $('.carousel').carousel({
-        interval: 5000 //changes the speed
+        interval: 5000, //changes the speed
+        pause: false
     })
     </script>
 {% endblock %}

@@ -6,9 +6,9 @@ db.create_all()
 
 
 
-db.session.add(panourile('1','0.0.0.1'))
+#db.session.add(panourile('1','0.0.0.1'))
 
-db.session.add(panourile('2','0.0.0.2'))
+db.session.add(panourile('acasa','1.1.1.1'))
 
 #commit
 db.session.commit()

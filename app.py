@@ -31,8 +31,6 @@ def home():
 def panouri():
 	panour = panourile.query.all()
 	return render_template('index.html',panouri=panour)
-
-	
 @app.route('/add',methods = ['GET', 'POST'])
 def add():
 	error = None
@@ -45,8 +43,6 @@ def add():
 				return redirect(url_for('panouri'))
 		else: error = 'complete every input'
 	return render_template('panou.html',error=error)
-
-
 @app.route('/temperature',methods = ['GET','POST'])
 def temperature():
 	if request.method == 'GET':
@@ -64,11 +60,11 @@ def panou(id):
 def upload():
 	if request.method == 'POST':
 		ip = request.form['id']
+		db.session.add(imagini(ip))
+		db.session.commit()
+		obj = imagini.query.order_by(imagini.id.desc()).first()
 		file = request.files['file']
 		if file and allowed_file(file.filename):
-			db.session.add(imagini(ip))
-			db.session.commit()
-			obj = imagini.query.order_by(imagini.id.desc()).first()
 			name = str(obj.id) + '.' + file.filename.rsplit('.', 1)[1]
 			obj.name = name
 			filename = secure_filename(name)
@@ -100,9 +96,6 @@ def accidente():
 		c.accident = a
 		return redirect(url_for('panouri'))
 
-
-
-#here goes slider
 @app.route('/runer',methods = ['GET'])
 def runer():
 	r = request.args.get('r')
@@ -114,12 +107,8 @@ def runer():
 @app.route('/delete',methods = ['GET'])
 def delete():
 	k = request.args.get('id')
-	p = panourile.query.filter_by(id = k).first()
-	imagini.query.filter_by(id_p = p.id_init).delete()
 	panourile.query.filter_by(id=k).delete()
 	return redirect(url_for('panouri'))
-
-
 if __name__ == "__main__":
 	app.run(debug=True)
  
